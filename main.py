@@ -1,14 +1,15 @@
-from dotenv import load_dotenv
 import os
-from fastapi import FastAPI, Query
-from databases import Database
-from fastapi.middleware.cors import CORSMiddleware
-
 from typing import List
 
-from models import GroupingData
+from databases import Database
+from dotenv import load_dotenv
+from fastapi import FastAPI, Query
+from fastapi.middleware.cors import CORSMiddleware
+from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
+from sqlalchemy.orm import sessionmaker
 
-from data_test import tenant_data, agent_data, state_data
+from models import GroupingData
+from services.querys import get_tenant_data, get_agent_data, get_state_data
 
 load_dotenv()
 db_host = os.getenv("DB_HOST")
@@ -18,12 +19,12 @@ db_password = os.getenv("DB_PASSWORD")
 db_name = os.getenv("DB_NAME")
 
 app = FastAPI(title="FastAPI Taurus",
-    description="Esta es una API para la prueba tecnica de taurus con FastAPI",
-    version="1.0.0",
-    openapi_url="/openapi.json",
-    docs_url="/",
-    redoc_url="/docs"
-)
+              description="Esta es una API para la prueba tecnica de taurus con FastAPI",
+              version="1.0.0",
+              openapi_url="/openapi.json",
+              docs_url="/",
+              redoc_url="/docs"
+              )
 
 app.add_middleware(
     CORSMiddleware,
@@ -33,16 +34,22 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-DATABASE_URL = f"mysql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}"
+DATABASE_URL = f"mysql+aiomysql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}"
 database = Database(DATABASE_URL)
 
+engine = create_async_engine(DATABASE_URL, echo=True, future=True)
+SessionLocal = sessionmaker(bind=engine, class_=AsyncSession, autocommit=False, autoflush=False)
+
+
 @app.get("/data", response_model=List[GroupingData.GroupingData])
-async def get_data(grouping_type: str = Query(..., enum=["tenant", "agent", "state"], description="Tipo de agrupación")):
-    if grouping_type == "tenant":
-        return tenant_data
-    elif grouping_type == "agent":
-        return agent_data
-    elif grouping_type == "state":
-        return state_data
-    else:
-        return []
+async def get_data(
+        grouping_type: str = Query(..., enum=["tenant", "agent", "state"], description="Tipo de agrupación")):
+    async with SessionLocal() as session:
+        if grouping_type == "tenant":
+            return await get_tenant_data(session)
+        elif grouping_type == "agent":
+            return await get_agent_data(session)
+        elif grouping_type == "state":
+            return await get_state_data(session)
+        else:
+            return []

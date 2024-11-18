@@ -1,21 +1,27 @@
 from models import GroupingData
 
 tenant_data = [
-    GroupingData.GroupingData(name="Tenant 1", type="tenant", quotes=100, quoteNB=90, quoteConversion=90.0, quoteNBPremium=50000,
-               averageNBPremium=550, pif=80, expiredPolicies=10, expiredPremium=10000, retention=85.5),
-    GroupingData.GroupingData(name="Tenant 2", type="tenant", quotes=120, quoteNB=110, quoteConversion=91.6, quoteNBPremium=60000,
-               averageNBPremium=600, pif=100, expiredPolicies=5, expiredPremium=8000, retention=87.3),
-    GroupingData.GroupingData(name="Tenant 3", type="tenant", quotes=80, quoteNB=75, quoteConversion=93.8, quoteNBPremium=40000,
-               averageNBPremium=533, pif=65, expiredPolicies=8, expiredPremium=5000, retention=82.4),
+    GroupingData.GroupingData(name="Tenant 1", type="tenant", quotes=100, quoteNB=90, quoteConversion=90.0,
+                              quoteNBPremium=50000,
+                              averageNBPremium=550, pif=80, expiredPolicies=10, expiredPremium=10000, retention=85.5),
+    GroupingData.GroupingData(name="Tenant 2", type="tenant", quotes=120, quoteNB=110, quoteConversion=91.6,
+                              quoteNBPremium=60000,
+                              averageNBPremium=600, pif=100, expiredPolicies=5, expiredPremium=8000, retention=87.3),
+    GroupingData.GroupingData(name="Tenant 3", type="tenant", quotes=80, quoteNB=75, quoteConversion=93.8,
+                              quoteNBPremium=40000,
+                              averageNBPremium=533, pif=65, expiredPolicies=8, expiredPremium=5000, retention=82.4),
 ]
 
 agent_data = [
-    GroupingData.GroupingData(name="Agent 1", type="agent", quotes=150, quoteNB=120, quoteConversion=80.5, quoteNBPremium=55000,
-              averageNBPremium=458.33, pif=80, expiredPolicies=0, expiredPremium=0, retention=80.5),
-    GroupingData.GroupingData(name="Agent 2", type="agent", quotes=170, quoteNB=145, quoteConversion=85.2, quoteNBPremium=62000,
-              averageNBPremium=427.59, pif=100, expiredPolicies=0, expiredPremium=0, retention=85.2),
-    GroupingData.GroupingData(name="Agent 3", type="agent", quotes=130, quoteNB=103, quoteConversion=78.9, quoteNBPremium=48000,
-              averageNBPremium=465.05, pif=70, expiredPolicies=0, expiredPremium=0, retention=78.9),
+    GroupingData.GroupingData(name="Agent 1", type="agent", quotes=150, quoteNB=120, quoteConversion=80.5,
+                              quoteNBPremium=55000,
+                              averageNBPremium=458.33, pif=80, expiredPolicies=0, expiredPremium=0, retention=80.5),
+    GroupingData.GroupingData(name="Agent 2", type="agent", quotes=170, quoteNB=145, quoteConversion=85.2,
+                              quoteNBPremium=62000,
+                              averageNBPremium=427.59, pif=100, expiredPolicies=0, expiredPremium=0, retention=85.2),
+    GroupingData.GroupingData(name="Agent 3", type="agent", quotes=130, quoteNB=103, quoteConversion=78.9,
+                              quoteNBPremium=48000,
+                              averageNBPremium=465.05, pif=70, expiredPolicies=0, expiredPremium=0, retention=78.9),
 ]
 
 state_data = [
